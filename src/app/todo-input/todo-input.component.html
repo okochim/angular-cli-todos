@@ -1,0 +1,5 @@
+<form (ngSubmit)="onSubmit()" #todoForm="ngForm">
+  <input [(ngModel)]="todo.title" name="title" required placeholder="title">
+  <textarea [(ngModel)]="todo.desc" name="desc" required placeholder="desc"></textarea>
+  <button type=submit [disabled]="!todoForm.form.valid">登録</button>
+</form>

@@ -1,0 +1,17 @@
+/* detail */
+.list-no {
+  text-align: center;
+  font-size: 2rem;
+  margin: 5px 5px 5px 5px;
+  width: 100px;
+  height: 100px;
+  background-color: #4e5d5f;
+  color: #ffffff;
+}
+div {
+  float: left;
+}
+button {
+  /*background-color: #e8345a;*/
+  background-color: #f0f0f0;
+}
