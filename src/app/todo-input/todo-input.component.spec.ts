@@ -1,6 +1,6 @@
 /* tslint:disable:no-unused-variable */
 
-import { TestBed, async } from '@angular/core/testing';
+import { TestBed, async, tick } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 import { FormsModule } from '@angular/forms';
 
@@ -24,44 +24,8 @@ describe('Component: TodoInput', () => {
      ]
     });
   });
-  it('should create an instance', () => {
-    let fixture = TestBed.createComponent(TodoInputComponent);
-    let app = fixture.debugElement.componentInstance;
-    expect(app).toBeTruthy();
-  });
-
-  it('should form button active', () => {
-    let fixture = TestBed.createComponent(TodoInputComponent);
-    let element = fixture.debugElement.nativeElement;
-    let inputElement = fixture.debugElement.query(By.css('input[name=title]')).nativeElement;
-    let textareaElement = fixture.debugElement.query(By.css('textarea[name=desc]')).nativeElement;
-    let buttonElement = fixture.debugElement.query(By.css('button')).nativeElement;
-    fixture.detectChanges();
-    fixture.whenStable().then(() => {
-      fixture.detectChanges();
-      expect(buttonElement.disabled).toBeFalsy();
-    });
-  });
-
-  it('should form button Inactive', () => {
-    let fixture = TestBed.createComponent(TodoInputComponent);
-    let inputElement = fixture.debugElement.query(By.css('input[name=title]')).nativeElement;
-    inputElement.value = "inputTitle";
-    inputElement.dispatchEvent(new Event('input'));
-    let textareaElement = fixture.debugElement.query(By.css('textarea[name=desc]')).nativeElement;
-    textareaElement.value = "inputDesc";
-    textareaElement.dispatchEvent(new Event('textarea'));
-    let buttonElement = fixture.debugElement.query(By.css('button')).nativeElement;
-    buttonElement.dispatchEvent(new Event('button'));
-    fixture.detectChanges();
-    fixture.whenStable().then(() => {
-      fixture.detectChanges();
-      expect(buttonElement.disabled).toBeTruthy();
-    });
-  });
-
   it('should NOT have todo before ngOnInit', () => {
-    let todoStore: TodoStoreService;
+    let todoStore = new TodoStoreService();
     let todoinput = new TodoInputComponent(todoStore);
     (<any>todoinput).ngOnInit();
     expect((<any>todoinput).todo).toEqual(new Todo());
@@ -81,4 +45,39 @@ describe('Component: TodoInput', () => {
     expect(todos[0].title).toEqual('testTitle');
     expect(todos[0].desc).toEqual('testDesc');
   });
+
+  it('should create an instance', () => {
+    let fixture = TestBed.createComponent(TodoInputComponent);
+    let app = fixture.debugElement.componentInstance;
+    expect(app).toBeTruthy();
+  });
+
+  it('should form button active', () => {
+    let fixture = TestBed.createComponent(TodoInputComponent);
+    fixture.detectChanges();
+    let element = fixture.debugElement.nativeElement;
+    let inputElement = fixture.debugElement.query(By.css('input[name=title]')).nativeElement;
+    let textareaElement = fixture.debugElement.query(By.css('textarea[name=desc]')).nativeElement;
+    let buttonElement = fixture.debugElement.query(By.css('button')).nativeElement;
+    fixture.whenStable().then(() => {
+      expect(buttonElement.attributes['disabled']).toBeDefined();
+    });
+  });
+
+  it('should form button Inactive', () => {
+    let fixture = TestBed.createComponent(TodoInputComponent);
+    fixture.detectChanges();
+    let inputElement = fixture.debugElement.query(By.css('input[name=title]')).nativeElement;
+    inputElement.value = 'inputTitle';
+    inputElement.dispatchEvent(new Event('input'));
+    let textareaElement = fixture.debugElement.query(By.css('textarea[name=desc]')).nativeElement;
+    textareaElement.value = 'inputDesc';
+    textareaElement.dispatchEvent(new Event('textarea'));
+    let buttonElement = fixture.debugElement.query(By.css('button')).nativeElement;
+    buttonElement.dispatchEvent(new Event('button'));
+    fixture.whenStable().then(() => {
+      expect(buttonElement.attributes['disabled']).not.toBeDefined();
+    });
+  });
+
 });

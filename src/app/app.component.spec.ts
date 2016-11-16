@@ -74,6 +74,6 @@ describe('App: Todos', () => {
     fixture.whenStable().then(() => {
       let myAppAfter = fixture.debugElement.query(By.css('app-root')).nativeElement;
       console.log(myAppAfter);
-    })
+    });
   }));
 });

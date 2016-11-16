@@ -1,34 +1,31 @@
 /* tslint:disable:no-unused-variable */
-
-import { TestBed, async } from '@angular/core/testing';
-import { FormsModule } from '@angular/forms';
+import { TestBed } from '@angular/core/testing';
+import { By } from '@angular/platform-browser';
 import { Component } from '@angular/core';
+import { FormsModule } from '@angular/forms';
+import { Observable } from 'rxjs/Rx';
 
-import { TodoListComponent } from './todo-list.component';
+// import { Todo } from '../todo';
+import { TodoInputComponent } from '../todo-input/todo-input.component';
 import { TodoStoreService } from '../todo-store.service';
 
-@Component({selector: 'app-todo-detail', template: '<p>app-todo-detail</p>'})
-export class TodoDetailStubComponent { }
-
-describe('Component: TodoList', () => {
+describe('Component: TodoInput', () => {
   beforeEach(() => {
     TestBed.configureTestingModule({
       imports: [
         FormsModule,
       ],
       declarations: [
-        TodoListComponent,
-        TodoDetailStubComponent
+        TodoInputComponent
       ],
       providers: [
         TodoStoreService
-      ]
+     ]
     });
   });
-  // it('should create an instance', () => {
-  //   let fixture = TestBed.createComponent(TodoListComponent);
-  //   let app = fixture.debugElement.componentInstance;
-  //   expect(app).toBeTruthy();
-  // });
-
+  it('should create an instance', () => {
+    let fixture = TestBed.createComponent(TodoInputComponent);
+    let app = fixture.debugElement.componentInstance;
+    expect(app).toBeTruthy();
+  });
 });
